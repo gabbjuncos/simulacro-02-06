@@ -11,7 +11,7 @@ import {
   NgbTypeaheadModule,
   NgbDateAdapter,
   NgbDateParserFormatter,
-  NgbDatepickerI18n
+  NgbDatepickerI18n,
 } from '@ng-bootstrap/ng-bootstrap';
 import { APP_BASE_HREF } from '@angular/common';
 
@@ -31,6 +31,7 @@ import { DatePickerAdapterISO } from './shared/DatePickerAdapterISO';
 import { DatePickerParserFormatter } from './shared/DatePickerParserFormater';
 import { DatePickerSpanish } from './shared/DatePickerSpanish';
 import { FormFocusDirective } from './shared/form-focus.directive';
+import { ContactosComponent } from './components/contactos/contactos.component';
 
 @NgModule({
   imports: [
@@ -47,28 +48,29 @@ import { FormFocusDirective } from './shared/form-focus.directive';
         { path: 'articulosfamilias', component: ArticulosFamiliasComponent },
         //{ path: 'clientes', component: ClientesComponent },
         { path: 'ventas', component: VentasComponent },
+        { path: 'contactos', component: ContactosComponent },
         { path: 'ventasconsultas', component: VentasConsultasComponent },
         //Ref Angular LazyLoad #1  https://angular.io/guide/lazy-loading-ngmodules
         {
           path: 'clientes',
           loadChildren: () =>
             import('./components/clientes/clientes.module').then(
-              m => m.ClientesModule
-            )
+              (m) => m.ClientesModule
+            ),
         },
-        { path: '**', redirectTo: '/inicio', pathMatch: 'full' }
+        { path: '**', redirectTo: '/inicio', pathMatch: 'full' },
       ],
       {
         relativeLinkResolution: 'legacy',
         // Ref Angular LazyLoad #2 https://angular.io/guide/lazy-loading-ngmodules
-        preloadingStrategy: PreloadAllModules
+        preloadingStrategy: PreloadAllModules,
       }
     ),
     NgbModule,
     NgbPaginationModule,
     NgbModalModule,
     NgbTypeaheadModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
   ],
   declarations: [
     AppComponent,
@@ -77,10 +79,11 @@ import { FormFocusDirective } from './shared/form-focus.directive';
     ArticulosFamiliasComponent,
     ArticulosComponent,
     ModalDialogComponent,
+    ContactosComponent,
 
     ClientesInfoComponent,
     VentasComponent,
-    VentasConsultasComponent
+    VentasConsultasComponent,
     //FormFocusDirective
   ],
   entryComponents: [ModalDialogComponent],
@@ -91,8 +94,8 @@ import { FormFocusDirective } from './shared/form-focus.directive';
     // ref angular ngbootrapt datepicker
     { provide: NgbDateAdapter, useClass: DatePickerAdapterISO },
     { provide: NgbDateParserFormatter, useClass: DatePickerParserFormatter }, // formato datepicker desde/hacia el imput
-    { provide: NgbDatepickerI18n, useClass: DatePickerSpanish }
+    { provide: NgbDatepickerI18n, useClass: DatePickerSpanish },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
